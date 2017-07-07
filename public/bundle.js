@@ -442,7 +442,7 @@ module.exports = reactProdInvariant;
 "use strict";
 
 
-module.exports = __webpack_require__(23);
+module.exports = __webpack_require__(24);
 
 
 /***/ }),
@@ -802,7 +802,7 @@ module.exports = ExecutionEnvironment;
 
 
 
-var _prodInvariant = __webpack_require__(24);
+var _prodInvariant = __webpack_require__(25);
 
 var ReactCurrentOwner = __webpack_require__(15);
 
@@ -1651,7 +1651,7 @@ var _prodInvariant = __webpack_require__(3),
 var CallbackQueue = __webpack_require__(78);
 var PooledClass = __webpack_require__(18);
 var ReactFeatureFlags = __webpack_require__(83);
-var ReactReconciler = __webpack_require__(22);
+var ReactReconciler = __webpack_require__(23);
 var Transaction = __webpack_require__(37);
 
 var invariant = __webpack_require__(1);
@@ -2943,6 +2943,12 @@ module.exports = warning;
 /* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__(109);
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 /**
  * Copyright 2015-present, Facebook, Inc.
@@ -3063,7 +3069,7 @@ DOMLazyTree.queueText = queueText;
 module.exports = DOMLazyTree;
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3235,7 +3241,7 @@ module.exports = ReactReconciler;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3373,7 +3379,7 @@ module.exports = React;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3415,12 +3421,6 @@ function reactProdInvariant(code) {
 }
 
 module.exports = reactProdInvariant;
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(109);
 
 /***/ }),
 /* 26 */
@@ -5716,7 +5716,7 @@ module.exports = ReactPropTypesSecret;
 
 
 
-var DOMLazyTree = __webpack_require__(21);
+var DOMLazyTree = __webpack_require__(22);
 var Danger = __webpack_require__(162);
 var ReactDOMComponentTree = __webpack_require__(6);
 var ReactInstrumentation = __webpack_require__(12);
@@ -6274,7 +6274,7 @@ var _prodInvariant = __webpack_require__(3);
 var ReactPropTypesSecret = __webpack_require__(88);
 var propTypesFactory = __webpack_require__(75);
 
-var React = __webpack_require__(23);
+var React = __webpack_require__(24);
 var PropTypes = propTypesFactory(React.isValidElement);
 
 var invariant = __webpack_require__(1);
@@ -9942,9 +9942,9 @@ module.exports = ReactInputSelection;
 
 var _prodInvariant = __webpack_require__(3);
 
-var DOMLazyTree = __webpack_require__(21);
+var DOMLazyTree = __webpack_require__(22);
 var DOMProperty = __webpack_require__(17);
-var React = __webpack_require__(23);
+var React = __webpack_require__(24);
 var ReactBrowserEventEmitter = __webpack_require__(35);
 var ReactCurrentOwner = __webpack_require__(15);
 var ReactDOMComponentTree = __webpack_require__(6);
@@ -9954,7 +9954,7 @@ var ReactFeatureFlags = __webpack_require__(83);
 var ReactInstanceMap = __webpack_require__(29);
 var ReactInstrumentation = __webpack_require__(12);
 var ReactMarkupChecksum = __webpack_require__(194);
-var ReactReconciler = __webpack_require__(22);
+var ReactReconciler = __webpack_require__(23);
 var ReactUpdateQueue = __webpack_require__(53);
 var ReactUpdates = __webpack_require__(14);
 
@@ -10487,7 +10487,7 @@ module.exports = ReactMount;
 
 var _prodInvariant = __webpack_require__(3);
 
-var React = __webpack_require__(23);
+var React = __webpack_require__(24);
 
 var invariant = __webpack_require__(1);
 
@@ -11560,7 +11560,7 @@ Route.childContextTypes = {
 
 
 
-var _prodInvariant = __webpack_require__(24),
+var _prodInvariant = __webpack_require__(25),
     _assign = __webpack_require__(5);
 
 var ReactNoopUpdateQueue = __webpack_require__(104);
@@ -12199,6 +12199,10 @@ var _NewPlaylist = __webpack_require__(127);
 
 var _NewPlaylist2 = _interopRequireDefault(_NewPlaylist);
 
+var _axios = __webpack_require__(21);
+
+var _axios2 = _interopRequireDefault(_axios);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -12213,12 +12217,41 @@ var Main = function (_Component) {
   function Main() {
     _classCallCheck(this, Main);
 
-    return _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this));
+
+    _this.state = {
+      playlists: []
+    };
+    _this.addNewPlaylist = _this.addNewPlaylist.bind(_this);
+    return _this;
   }
 
   _createClass(Main, [{
+    key: 'addNewPlaylist',
+    value: function addNewPlaylist(playlist) {
+      // const inputValue = this.state.inputValue;
+      _axios2.default.post('/api/playlists', { name: playlist }).then(function (res) {
+        return res.data;
+      }).then(function (result) {
+        console.log(result);
+      });
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      _axios2.default.get('/api/playlists/').then(function (res) {
+        return res.data;
+      }).then(function (playlists) {
+        return _this2.setState({ playlists: playlists });
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this3 = this;
+
       return _react2.default.createElement(
         _reactRouterDom.HashRouter,
         null,
@@ -12228,7 +12261,7 @@ var Main = function (_Component) {
           _react2.default.createElement(
             'div',
             { className: 'col-xs-2' },
-            _react2.default.createElement(_Sidebar2.default, null)
+            _react2.default.createElement(_Sidebar2.default, { playlists: this.state.playlists })
           ),
           _react2.default.createElement(
             'div',
@@ -12240,7 +12273,9 @@ var Main = function (_Component) {
               _react2.default.createElement(_reactRouterDom.Route, { path: '/albums/:albumId', component: _SingleAlbum2.default }),
               _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/artists', component: _AllArtists2.default }),
               _react2.default.createElement(_reactRouterDom.Route, { path: '/artists/:artistId', component: _SingleArtist2.default }),
-              _react2.default.createElement(_reactRouterDom.Route, { path: '/new-playlist', component: _NewPlaylist2.default }),
+              _react2.default.createElement(_reactRouterDom.Route, { path: '/new-playlist', render: function render(routeProps) {
+                  return _react2.default.createElement(_NewPlaylist2.default, { addNewPlaylist: _this3.state.addNewPlaylist });
+                } }),
               _react2.default.createElement(_reactRouterDom.Route, { component: _StatefulAlbums2.default })
             )
           ),
@@ -13119,7 +13154,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(31);
 
-var _axios = __webpack_require__(25);
+var _axios = __webpack_require__(21);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -13230,9 +13265,13 @@ var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _axios = __webpack_require__(25);
+var _axios = __webpack_require__(21);
 
 var _axios2 = _interopRequireDefault(_axios);
+
+var _Main = __webpack_require__(107);
+
+var _Main2 = _interopRequireDefault(_Main);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -13272,12 +13311,8 @@ var NewPlaylist = function (_Component) {
         value: function handleSubmit(event) {
             event.preventDefault();
 
-            var inputValue = this.state.inputValue;
-            _axios2.default.post('/api/playlists', { name: inputValue }).then(function (res) {
-                return res.data;
-            }).then(function (result) {
-                console.log(result);
-            });
+            var addNewPlaylist = this.props.addNewPlaylist;
+            addNewPlaylist(this.state.inputValue);
 
             this.setState({ inputValue: '', edited: false });
         }
@@ -13417,7 +13452,7 @@ exports.default = Player;
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _react = __webpack_require__(4);
@@ -13429,58 +13464,75 @@ var _reactRouterDom = __webpack_require__(31);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Sidebar = function Sidebar(props) {
+    var playlists = props.playlists;
 
-  return _react2.default.createElement(
-    'sidebar',
-    null,
-    _react2.default.createElement('img', { src: 'juke.svg', className: 'logo' }),
-    _react2.default.createElement(
-      'section',
-      null,
-      _react2.default.createElement(
-        'h4',
-        { className: 'menu-item' },
-        _react2.default.createElement(
-          _reactRouterDom.Link,
-          { to: '/albums' },
-          'ALBUMS'
-        )
-      )
-    ),
-    _react2.default.createElement(
-      'section',
-      null,
-      _react2.default.createElement(
-        'h4',
-        { className: 'menu-item' },
-        _react2.default.createElement(
-          _reactRouterDom.Link,
-          { to: '/artists' },
-          'ARTISTS'
-        )
-      )
-    ),
-    _react2.default.createElement('hr', null),
-    _react2.default.createElement(
-      'section',
-      null,
-      _react2.default.createElement(
-        'h4',
-        { className: 'text-muted' },
-        'PLAYLISTS'
-      ),
-      _react2.default.createElement(
-        'h4',
+    return _react2.default.createElement(
+        'sidebar',
         null,
+        _react2.default.createElement('img', { src: 'juke.svg', className: 'logo' }),
         _react2.default.createElement(
-          _reactRouterDom.Link,
-          { className: 'btn btn-primary btn-block', to: '/new-playlist' },
-          _react2.default.createElement('span', { className: 'glyphicon glyphicon-plus' }),
-          ' PLAYLIST'
+            'section',
+            null,
+            _react2.default.createElement(
+                'h4',
+                { className: 'menu-item' },
+                _react2.default.createElement(
+                    _reactRouterDom.Link,
+                    { to: '/albums' },
+                    'ALBUMS'
+                )
+            )
+        ),
+        _react2.default.createElement(
+            'section',
+            null,
+            _react2.default.createElement(
+                'h4',
+                { className: 'menu-item' },
+                _react2.default.createElement(
+                    _reactRouterDom.Link,
+                    { to: '/artists' },
+                    'ARTISTS'
+                )
+            )
+        ),
+        _react2.default.createElement('hr', null),
+        _react2.default.createElement(
+            'section',
+            null,
+            _react2.default.createElement(
+                'h4',
+                { className: 'text-muted' },
+                'PLAYLISTS'
+            ),
+            _react2.default.createElement(
+                'h4',
+                null,
+                _react2.default.createElement(
+                    _reactRouterDom.Link,
+                    { className: 'btn btn-primary btn-block', to: '/new-playlist' },
+                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-plus' }),
+                    ' PLAYLIST'
+                ),
+                _react2.default.createElement('hr', null),
+                _react2.default.createElement(
+                    'ul',
+                    { className: 'list-unstyled' },
+                    playlists.map(function (playlist) {
+                        return _react2.default.createElement(
+                            'li',
+                            { className: 'playlist-item menu-item', key: playlist.id },
+                            _react2.default.createElement(
+                                _reactRouterDom.Link,
+                                { to: '/playlists/' + playlist.id },
+                                playlist.name
+                            )
+                        );
+                    })
+                )
+            )
         )
-      )
-    )
-  );
+    );
 };
 
 exports.default = Sidebar;
@@ -13502,7 +13554,7 @@ var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _axios = __webpack_require__(25);
+var _axios = __webpack_require__(21);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -13598,7 +13650,7 @@ var _bluebird = __webpack_require__(134);
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
-var _axios = __webpack_require__(25);
+var _axios = __webpack_require__(21);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -13724,7 +13776,7 @@ var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _axios = __webpack_require__(25);
+var _axios = __webpack_require__(21);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -23121,7 +23173,7 @@ module.exports = ChangeEventPlugin;
 
 var _prodInvariant = __webpack_require__(3);
 
-var DOMLazyTree = __webpack_require__(21);
+var DOMLazyTree = __webpack_require__(22);
 var ExecutionEnvironment = __webpack_require__(7);
 
 var createNodesFromMarkup = __webpack_require__(140);
@@ -23646,7 +23698,7 @@ module.exports = HTMLDOMPropertyConfig;
 
 
 
-var ReactReconciler = __webpack_require__(22);
+var ReactReconciler = __webpack_require__(23);
 
 var instantiateReactComponent = __webpack_require__(95);
 var KeyEscapeUtils = __webpack_require__(49);
@@ -23841,14 +23893,14 @@ module.exports = ReactComponentBrowserEnvironment;
 var _prodInvariant = __webpack_require__(3),
     _assign = __webpack_require__(5);
 
-var React = __webpack_require__(23);
+var React = __webpack_require__(24);
 var ReactComponentEnvironment = __webpack_require__(51);
 var ReactCurrentOwner = __webpack_require__(15);
 var ReactErrorUtils = __webpack_require__(52);
 var ReactInstanceMap = __webpack_require__(29);
 var ReactInstrumentation = __webpack_require__(12);
 var ReactNodeTypes = __webpack_require__(87);
-var ReactReconciler = __webpack_require__(22);
+var ReactReconciler = __webpack_require__(23);
 
 if (process.env.NODE_ENV !== 'production') {
   var checkReactTypeSpec = __webpack_require__(217);
@@ -24749,7 +24801,7 @@ module.exports = ReactCompositeComponent;
 var ReactDOMComponentTree = __webpack_require__(6);
 var ReactDefaultInjection = __webpack_require__(187);
 var ReactMount = __webpack_require__(86);
-var ReactReconciler = __webpack_require__(22);
+var ReactReconciler = __webpack_require__(23);
 var ReactUpdates = __webpack_require__(14);
 var ReactVersion = __webpack_require__(202);
 
@@ -24868,7 +24920,7 @@ var _prodInvariant = __webpack_require__(3),
 
 var AutoFocusUtils = __webpack_require__(158);
 var CSSPropertyOperations = __webpack_require__(160);
-var DOMLazyTree = __webpack_require__(21);
+var DOMLazyTree = __webpack_require__(22);
 var DOMNamespaces = __webpack_require__(47);
 var DOMProperty = __webpack_require__(17);
 var DOMPropertyOperations = __webpack_require__(79);
@@ -25918,7 +25970,7 @@ module.exports = ReactDOMContainerInfo;
 
 var _assign = __webpack_require__(5);
 
-var DOMLazyTree = __webpack_require__(21);
+var DOMLazyTree = __webpack_require__(22);
 var ReactDOMComponentTree = __webpack_require__(6);
 
 var ReactDOMEmptyComponent = function (instantiate) {
@@ -26486,7 +26538,7 @@ module.exports = ReactDOMNullInputValuePropHook;
 
 var _assign = __webpack_require__(5);
 
-var React = __webpack_require__(23);
+var React = __webpack_require__(24);
 var ReactDOMComponentTree = __webpack_require__(6);
 var ReactDOMSelect = __webpack_require__(81);
 
@@ -26833,7 +26885,7 @@ var _prodInvariant = __webpack_require__(3),
     _assign = __webpack_require__(5);
 
 var DOMChildrenOperations = __webpack_require__(46);
-var DOMLazyTree = __webpack_require__(21);
+var DOMLazyTree = __webpack_require__(22);
 var ReactDOMComponentTree = __webpack_require__(6);
 
 var escapeTextContentForBrowser = __webpack_require__(38);
@@ -28359,7 +28411,7 @@ var ReactInstanceMap = __webpack_require__(29);
 var ReactInstrumentation = __webpack_require__(12);
 
 var ReactCurrentOwner = __webpack_require__(15);
-var ReactReconciler = __webpack_require__(22);
+var ReactReconciler = __webpack_require__(23);
 var ReactChildReconciler = __webpack_require__(167);
 
 var emptyFunction = __webpack_require__(10);
@@ -32783,7 +32835,7 @@ module.exports = KeyEscapeUtils;
 
 
 
-var _prodInvariant = __webpack_require__(24);
+var _prodInvariant = __webpack_require__(25);
 
 var invariant = __webpack_require__(1);
 
@@ -33367,7 +33419,7 @@ module.exports = '15.6.1';
 
 
 
-var _prodInvariant = __webpack_require__(24);
+var _prodInvariant = __webpack_require__(25);
 
 var ReactPropTypeLocationNames = __webpack_require__(250);
 var ReactPropTypesSecret = __webpack_require__(252);
@@ -33513,7 +33565,7 @@ module.exports = getNextDebugID;
  */
 
 
-var _prodInvariant = __webpack_require__(24);
+var _prodInvariant = __webpack_require__(25);
 
 var ReactElement = __webpack_require__(19);
 
@@ -33558,7 +33610,7 @@ module.exports = onlyChild;
 
 
 
-var _prodInvariant = __webpack_require__(24);
+var _prodInvariant = __webpack_require__(25);
 
 var ReactCurrentOwner = __webpack_require__(15);
 var REACT_ELEMENT_TYPE = __webpack_require__(102);

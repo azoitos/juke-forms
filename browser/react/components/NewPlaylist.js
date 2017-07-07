@@ -3,6 +3,7 @@
  */
 import React, { Component } from 'react';
 import axios from 'axios';
+import Main from './Main';
 
 export default class NewPlaylist extends Component {
 
@@ -22,12 +23,8 @@ export default class NewPlaylist extends Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        const inputValue = this.state.inputValue;
-        axios.post('/api/playlists', {name: inputValue})
-        .then(res => res.data)
-        .then(result => {
-            console.log(result)
-        })
+        const addNewPlaylist = this.props.addNewPlaylist;
+        addNewPlaylist(this.state.inputValue);
 
         this.setState({ inputValue: '', edited: false })
     }
