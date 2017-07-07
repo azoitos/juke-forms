@@ -12195,6 +12195,10 @@ var _Player = __webpack_require__(127);
 
 var _Player2 = _interopRequireDefault(_Player);
 
+var _NewPlaylist = __webpack_require__(262);
+
+var _NewPlaylist2 = _interopRequireDefault(_NewPlaylist);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -12236,6 +12240,7 @@ var Main = function (_Component) {
               _react2.default.createElement(_reactRouterDom.Route, { path: '/albums/:albumId', component: _SingleAlbum2.default }),
               _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/artists', component: _AllArtists2.default }),
               _react2.default.createElement(_reactRouterDom.Route, { path: '/artists/:artistId', component: _SingleArtist2.default }),
+              _react2.default.createElement(_reactRouterDom.Route, { path: '/new-playlist', component: _NewPlaylist2.default }),
               _react2.default.createElement(_reactRouterDom.Route, { component: _StatefulAlbums2.default })
             )
           ),
@@ -13315,6 +13320,26 @@ var Sidebar = function Sidebar(props) {
           _reactRouterDom.Link,
           { to: '/artists' },
           'ARTISTS'
+        )
+      )
+    ),
+    _react2.default.createElement('hr', null),
+    _react2.default.createElement(
+      'section',
+      null,
+      _react2.default.createElement(
+        'h4',
+        { className: 'text-muted' },
+        'PLAYLISTS'
+      ),
+      _react2.default.createElement(
+        'h4',
+        null,
+        _react2.default.createElement(
+          _reactRouterDom.Link,
+          { className: 'btn btn-primary btn-block', to: '/new-playlist' },
+          _react2.default.createElement('span', { className: 'glyphicon glyphicon-plus' }),
+          ' PLAYLIST'
         )
       )
     )
@@ -33934,6 +33959,121 @@ var valueEqual = function valueEqual(a, b) {
 };
 
 exports.default = valueEqual;
+
+/***/ }),
+/* 262 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by kieranderfus on 7/6/17.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+var NewPlaylist = function (_Component) {
+    _inherits(NewPlaylist, _Component);
+
+    function NewPlaylist() {
+        _classCallCheck(this, NewPlaylist);
+
+        var _this = _possibleConstructorReturn(this, (NewPlaylist.__proto__ || Object.getPrototypeOf(NewPlaylist)).call(this));
+
+        _this.handleChange = _this.handleChange.bind(_this);
+        _this.handleSubmit = _this.handleSubmit.bind(_this);
+        _this.state = {
+            inputValue: ''
+        };
+        return _this;
+    }
+
+    _createClass(NewPlaylist, [{
+        key: 'handleChange',
+        value: function handleChange(event) {
+            this.setState({ inputValue: event.target.value });
+        }
+    }, {
+        key: 'handleSubmit',
+        value: function handleSubmit(event) {
+            // this.setState({ inputValue: event.target.value })
+            event.preventDefault();
+            console.log(this.state.inputValue);
+            this.setState({ inputValue: '' });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                { className: 'well' },
+                _react2.default.createElement(
+                    'form',
+                    { className: 'form-horizontal', onSubmit: this.handleSubmit },
+                    _react2.default.createElement(
+                        'fieldset',
+                        null,
+                        _react2.default.createElement(
+                            'legend',
+                            null,
+                            'New Playlist'
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'form-group' },
+                            _react2.default.createElement(
+                                'label',
+                                { className: 'col-xs-2 control-label' },
+                                'Name'
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'col-xs-10' },
+                                _react2.default.createElement('input', { className: 'form-control', type: 'text',
+                                    onChange: this.handleChange,
+                                    value: this.state.inputValue
+                                })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'form-group' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'col-xs-10 col-xs-offset-2' },
+                                _react2.default.createElement(
+                                    'button',
+                                    { type: 'submit', className: 'btn btn-success' },
+                                    'Create Playlist'
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return NewPlaylist;
+}(_react.Component);
+
+exports.default = NewPlaylist;
 
 /***/ })
 /******/ ]);
